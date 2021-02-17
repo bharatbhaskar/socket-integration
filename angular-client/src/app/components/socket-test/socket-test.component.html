@@ -1,0 +1,43 @@
+<div class="p-3">
+  <div class="p-2" style="width: 40vw; margin:0 auto;">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Enter your username" [(ngModel)]="username"
+        [disabled]="entered">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button" (click)="toggleConnection()">{{entered==true ? 'Exit' :
+          'Enter'}}</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="width: 80vw; margin:0 auto;">
+    <ul class="list-group" *ngIf="messages.length > 0">
+      <li *ngFor="let message of messages" [class.active]="message.type == 'enter'"
+        [class.disabled]="message.type == 'exit'" class="list-group-item">
+        <ng-container *ngIf="message.type == 'enter'">
+          <span class="font-italic"> {{message.username}} joined the chat.</span>
+        </ng-container>
+        <ng-container *ngIf="message.type == 'chat'">
+          {{message.username}}: {{message.text}}
+        </ng-container>
+        <ng-container *ngIf="message.type == 'exit'">
+          <span class="font-italic"> {{message.username}} left the chat.</span>
+        </ng-container>
+      </li>
+    </ul>
+
+    <ul class="list-group" *ngIf="messages.length == 0">
+      <li class="list-group-item">No Messages to display</li>
+    </ul>
+  </div>
+
+  <div class="pt-4" style="width: 80vw; margin:0 auto;">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Type message here.." [(ngModel)]="message"
+        [disabled]="!entered">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button" (click)="sendMessage()">{{'Send Message'}}</button>
+      </div>
+    </div>
+  </div>
+</div>
